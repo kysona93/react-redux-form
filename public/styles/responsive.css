@@ -1,0 +1,56 @@
+/* Responsive Resolutions Screens */
+@media (max-width: 1024px) {
+  .navbarpullleft.navbar-form.navbar-left {
+
+  }
+}
+@media (min-width: 1200px){
+
+}
+
+@media (min-width: 992px){
+
+
+  }
+
+@media (max-width: 768px){
+  .navbar-nav {
+    position: relative;
+    display: -webkit-box;
+    color:white;
+  }
+  .navbarpullleft.navbar-form.navbar-left {
+    margin-left: 0px;
+  }
+  input#formInlineName {
+    /* background: red; */
+    width: 100%;
+  }
+  .box {
+    background: white;
+    margin-left: 0px;
+    width: 310px;
+    position: absolute;
+    margin-top: 0px;
+  }
+  nav.navbar.navbar-default {
+    margin-top: 0px;
+  }
+  .navbar-default .navbar-nav>li>a{
+    color:#292929;
+  }
+  /*.navbar-form .form-group {*/
+  /*display: inline-block;*/
+  /*vertical-align: middle;*/
+  /*margin: 2px;*/
+  /*}*/
+  .navbar-brand {
+    float: right;
+    height: 50px;
+    padding: 14px 7px;
+    font-size: 18px;
+    line-height: 20px;
+  }
+
+
+}
