@@ -4,6 +4,7 @@ import { PageHeader, Form, FormGroup, Button, FormControl, Col, Row, Grid, HelpB
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import  Navigation  from './../home/navigation';
 
 class UserSignin extends React.Component {
     constructor(props){
@@ -13,7 +14,8 @@ class UserSignin extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{"backgroundImage":"url(http://localhost:8080/icon/bk_sigin.jpg)","width":"100%","heigth":"100%","backgroundSize":"cover"}}>
+                <Navigation />
                 <Grid>
                     <Row>
                         <Col xs={12} sm={12} md={2} lg={2}></Col>
@@ -35,6 +37,7 @@ class UserSignin extends React.Component {
                         <Col xs={12} sm={12} md={2} lg={2}></Col>
                     </Row>
                 </Grid>
+                <br/><br/>
             </div>
         )
     }
