@@ -1,56 +1,76 @@
-import React from 'React';
+import React from 'react';
 import { Link } from 'react-router';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Divider from 'material-ui/Divider';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { PageHeader, Form, FormGroup, Button, FormControl, Col, Row, Grid, HelpBlock } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
-import Navigation from './../../home/navigation';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class ForgetPassword extends React.Component {
+    constructor(props){
+        super(props)
+        this.formSubmit = this.formSubmit.bind(this);
+    }
     render(){
-        const { handleSubmit } = this.props;
         return(
             <div>
-                <Navigation />
                 <Grid>
-                    <MuiThemeProvider>
                     <Row>
-                        <Col xs={12} sm={12} md={1} lg={1}></Col>
-                        <Col xs={12} sm={12} md={10} lg={10}>
-                            <h3>Reset Your Password or <a href="#">Sign Up</a></h3>
-                            <Divider />
-                            <h5>Enter your email address and we'll email you a link to reset your password.</h5>
+                        <Col xs={12} sm={12} md={2} lg={2}></Col>
+                        <Col xs={12} sm={12} md={8} lg={8}>
+                            <PageHeader>Forget Password</PageHeader>
+                            <Form horizontal onSubmit={this.props.handleSubmit(this.formSubmit)}>
+                                <Field name="email" component={ForgetPassword.renderEmail} />
+                                <FormGroup>
+                                    <Button type="submit" disabled={this.props.invalid || this.props.submitting}>Send</Button>
+                                </FormGroup>
+                            </Form>
                         </Col>
-                        <Col xs={12} sm={12} md={1} lg={1}></Col>
+                        <Col xs={12} sm={12} md={2} lg={2}></Col>
                     </Row>
-                    </MuiThemeProvider>
-                    <Row>
-                        <Col xs={12} sm={12} md={1} lg={1}></Col>
-                        <Col xs={12} sm={12} md={10} lg={10}>
-                            <br/>
-                            <br/>
-                            <form onSubmit={handleSubmit}>
-                                <div>
-                                    <label htmlFor="email">Email</label>
-                                    {' '}
-                                    <Field name="email" component="input" type="email"/>
-                                </div>
-                                <br/>
-                                <button type="submit">Submit</button>
-                            </form>
-                        </Col>
-                        <Col xs={12} sm={12} md={1} lg={1}></Col>
-                    </Row>
-                    <Link to="/set-new-password">Set New Password</Link>
                 </Grid>
             </div>
         )
     }
+    formSubmit(values){
+        alert("email="+values.email)
+    }
+
+    static renderEmail(props){
+        return(
+            <FormGroup validationState={!props.meta.touched ? null : (props.meta.error ? 'error' : 'success')}>
+                Email
+                {' '}
+                <FormControl {...props.input} id="email" type="text" placeholder="email" />
+                <FormControl.Feedback />
+                <HelpBlock>
+                    {props.meta.touched && props.meta.error ? props.meta.error : null }
+                </HelpBlock>
+            </FormGroup>
+        )
+    }
 }
 
-// Decorate the form component
 ForgetPassword = reduxForm({
-    form: 'password' // a unique name for this form
-})(ForgetPassword);
+    form: 'user_signin',
+    validate: function(values){
+        var regex_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const errors ={ }
+        if(!regex_email.test(values.email)){
+            errors.email = 'Email is invalid'
+        }
+        return errors
+    }
+})(ForgetPassword)
 
-export default ForgetPassword;
+//function mapDispatchToProps(dispatch){
+//    return bindActionCreators({sendEmailForgetPassword},dispatch)
+//}
+function mapStateToProps(state, own_props){
+    let form_data={
+        email: ''
+    }
+    return {
+        initialValues: form_data
+    }
+}
+export default connect(mapStateToProps)(ForgetPassword)
