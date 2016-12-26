@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { PageHeader, Form, FormGroup, Button, FormControl, Col, Row, Grid, HelpBlock } from 'react-bootstrap';
+import { PageHeader, Form, FormGroup, Button, FormControl, Col, Row, Grid, HelpBlock, MenuItem, InputGroup } from 'react-bootstrap';
+import Divider from 'material-ui/Divider';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,23 +20,56 @@ class UserSignin extends React.Component {
                 <Navigation />
                 <Grid>
                     <Row>
-                        <Col xs={12} sm={12} md={2} lg={2}></Col>
-                        <Col xs={12} sm={12} md={8} lg={8}>
-                            <PageHeader>Sign In</PageHeader>
-                            <Form horizontal onSubmit={this.props.handleSubmit(this.formSubmit)}>
-                                <Field name="email" component={UserSignin.renderEmail} />
-                                <Field name="password" component={UserSignin.renderPassword} />
-                                <FormGroup>
-                                    <Button type="submit" disabled={this.props.invalid || this.props.submitting}>Login</Button>
-                                </FormGroup>
-                            </Form>
-                            <br/>
+                        <Col xs={12} sm={12} md={4} lg={4}></Col>
+                        <Col xs={12} sm={12} md={4} lg={4}>
+                            <Row>
+                                <Col xs={12} sm={12} md={12} lg={12}>
+                                    <br/><br/><br/>
+                                    <center><h3>Macrocoupon</h3></center>
+                                    <MuiThemeProvider>
+                                        <Divider/>
+                                    </MuiThemeProvider>
+                                    <h5>Need a Macrocoupon Account? <a href="#">Sign Up</a></h5>
+                                    <br/>
+                                    <Form horizontal onSubmit={this.props.handleSubmit(this.formSubmit)}>
+                                        <Field name="email" component={UserSignin.renderEmail} />
+                                        <Field name="password" component={UserSignin.renderPassword} />
+                                        <center>
+                                            <Link to="/forget-password" style={{marginLeft:"-12px"}}>Forget Password?</Link>
+                                            <br/><br/>
+                                            <FormGroup>
+                                                <Button type="submit" disabled={this.props.invalid || this.props.submitting}>Sign In</Button>
+                                            </FormGroup>
+                                        </center>
+                                    </Form>
+                                    <Row>
+                                        <center>
+                                            <h4>Or you can sign in vai</h4>
+                                            <MuiThemeProvider>
+                                                <Divider/>
+                                            </MuiThemeProvider>
+                                        </center>
+                                        <br/>
+                                        <Col xs={12} sm={12} md={6} lg={6}>
+                                            <Button bsStyle="primary"><i className="fa fa-facebook" aria-hidden="true"></i>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;Login with Facebook
+                                            </Button>
+                                        </Col>
+                                        <Col xs={12} sm={12} md={6} lg={6}>
+                                            <Button bsStyle="danger"><i className="fa fa-google" aria-hidden="true"></i>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;Login with Google
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                            {/*
                             <PageHeader>User Forget Password</PageHeader>
-                            <Link to="/forget-password">Forget Password?</Link>
                             <br/><br/>
                             <Link to="/set-new-password">Set New Password</Link>
+                            */}
                         </Col>
-                        <Col xs={12} sm={12} md={2} lg={2}></Col>
+                        <Col xs={12} sm={12} md={4} lg={4}></Col>
                     </Row>
                 </Grid>
                 <br/><br/>
@@ -49,9 +84,10 @@ class UserSignin extends React.Component {
     static renderEmail(props){
         return(
             <FormGroup validationState={!props.meta.touched ? null : (props.meta.error ? 'error' : 'success')}>
-                Email
-                {' '}
+                <InputGroup>
+                    <InputGroup.Addon><i className="fa fa-envelope-o" aria-hidden="true"></i></InputGroup.Addon>
                 <FormControl {...props.input} id="email" type="text" placeholder="email" />
+                </InputGroup>
                 <FormControl.Feedback />
                 <HelpBlock>
                     {props.meta.touched && props.meta.error ? props.meta.error : null }
@@ -62,9 +98,9 @@ class UserSignin extends React.Component {
     static renderPassword(props){
         return(
             <FormGroup validationState={!props.meta.touched ? null : (props.meta.error ? 'error' : 'success')}>
-                Password
-                {' '}
-                <FormControl {...props.input} id="password" type="password" placeholder="password" />
+                <InputGroup><InputGroup.Addon><i className="fa fa-key" aria-hidden="true"></i></InputGroup.Addon>
+                    <FormControl {...props.input} id="password" type="password" placeholder="password" />
+                </InputGroup>
                 <FormControl.Feedback />
                 <HelpBlock>
                     {props.meta.touched && props.meta.error ? props.meta.error : null }
